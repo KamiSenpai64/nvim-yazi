@@ -1,0 +1,142 @@
+*nvim-yazi.txt*                Neovim plugin for Yazi file manager integration
+
+==============================================================================
+CONTENTS                                                   *nvim-yazi-contents*
+
+    1. Introduction ........................... |nvim-yazi-introduction|
+    2. Requirements ........................... |nvim-yazi-requirements|
+    3. Installation ........................... |nvim-yazi-installation|
+    4. Configuration .......................... |nvim-yazi-configuration|
+    5. Commands ............................... |nvim-yazi-commands|
+    6. Mappings ............................... |nvim-yazi-mappings|
+    7. Functions .............................. |nvim-yazi-functions|
+    8. FAQ .................................... |nvim-yazi-faq|
+
+==============================================================================
+1. INTRODUCTION                                         *nvim-yazi-introduction*
+
+nvim-yazi is a Neovim plugin that provides seamless integration with the Yazi
+terminal file manager (https://yazi-rs.github.io/).
+
+Features:
+- Open Yazi file manager in a floating window from Neovim
+- Select files in Yazi and open them in Neovim buffers
+- Navigate between Neovim and Yazi with custom keybindings
+- Support for custom configuration options
+- Return to the exact location in Neovim after file selection
+- File preview integration with Neovim buffers
+
+==============================================================================
+2. REQUIREMENTS                                         *nvim-yazi-requirements*
+
+- Neovim 0.7.0 or later
+- Yazi terminal file manager (https://yazi-rs.github.io/)
+- [Optional] plenary.nvim for additional functionality
+
+==============================================================================
+3. INSTALLATION                                         *nvim-yazi-installation*
+
+Using packer.nvim:
+>lua
+    use {
+      'yourusername/nvim-yazi',
+      requires = { 'nvim-lua/plenary.nvim' }
+    }
+<
+
+Using lazy.nvim:
+>lua
+    {
+      'yourusername/nvim-yazi',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    }
+<
+
+==============================================================================
+4. CONFIGURATION                                       *nvim-yazi-configuration*
+
+Configure nvim-yazi by calling the setup function with your desired options:
+
+>lua
+    require('yazi').setup({
+      -- Width of the Yazi window, can be an integer or a float between 0 and 1
+      width = 0.8,
+      
+      -- Height of the Yazi window, can be an integer or a float between 0 and 1
+      height = 0.8,
+      
+      -- Position of the Yazi window
+      position = "center", -- "center", "top", "bottom", "left", "right"
+      
+      -- Border style for the floating window
+      border = "rounded", -- "none", "single", "double", "rounded", "solid", "shadow"
+      
+      -- Transparency level of the floating window (0-100)
+      transparency = 0,
+      
+      -- Default keymaps
+      keymaps = {
+        open = "<leader>y",        -- Open Yazi
+        open_current = "<leader>Y", -- Open Yazi in current file directory
+        quit = "q",                -- Quit Yazi and return to Neovim
+        select = "<CR>"            -- Select file and open in Neovim
+      },
+      
+      -- Set to true to automatically open selected file in Neovim
+      auto_open_on_select = true,
+      
+      -- Events to trigger when interacting with Yazi
+      on_select = function(selected_file)
+        -- Custom logic when a file is selected
+      end
+    })
+<
+
+==============================================================================
+5. COMMANDS                                               *nvim-yazi-commands*
+
+*:Yazi*             Open Yazi in current working directory
+*:YaziCurrentFile*  Open Yazi in the directory of the current file
+*:YaziClose*        Close the Yazi window
+*:CheckHealthYazi*  Run health checks for the plugin
+
+==============================================================================
+6. MAPPINGS                                               *nvim-yazi-mappings*
+
+The following default mappings are provided:
+
+<leader>y   Open Yazi in current working directory
+<leader>Y   Open Yazi in the directory of the current file
+q           Quit Yazi and return to Neovim (when in Yazi window)
+<CR>        Select file and open in Neovim (depends on Yazi configuration)
+
+All mappings can be customized in the setup configuration.
+
+==============================================================================
+7. FUNCTIONS                                             *nvim-yazi-functions*
+
+*yazi.open()*          Open Yazi in current working directory
+*yazi.open_current_file()* Open Yazi in the directory of the current file
+*yazi.close()*         Close the Yazi window
+
+==============================================================================
+8. FAQ                                                         *nvim-yazi-faq*
+
+Q: How do I customize the appearance of the Yazi window?
+A: You can adjust the width, height, position, border, and transparency 
+   options in the setup configuration.
+
+Q: Can I use different keybindings?
+A: Yes, you can customize all keybindings in the keymaps table in the setup
+   configuration.
+
+Q: How do I perform a custom action when a file is selected in Yazi?
+A: You can provide a custom function to the on_select option in the setup
+   configuration.
+
+Q: How do I check if the plugin is working correctly?
+A: You can run :CheckHealthYazi to check if Yazi is properly installed and
+   the plugin is configured correctly.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
